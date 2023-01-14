@@ -1,7 +1,4 @@
 library flutter_saucenao_img_search;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+export 'src/image_searcher.dart';
+export 'src/searcher_config.dart';
