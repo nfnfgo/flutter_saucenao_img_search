@@ -13,10 +13,18 @@ class ImageSearcherConfig {
   /// in dart:html package
   String? header;
 
+  /// SauceNAO API parameter. Check SauceNAO API Doc for more info
+  int db;
+
+  /// SauceNAO API parameter. Check SauceNAO API Doc for more info
+  int numres;
+
   /// Create an ImageSearchConfig instance
   ImageSearcherConfig({
     required this.apiKey,
     this.header,
+    this.db = 999,
+    this.numres = 3,
   }) {
     ;
   }
@@ -37,6 +45,16 @@ class ImageSearcherConfig {
       infoMap['header'] = header;
     } catch (e) {}
 
+    // db
+    try {
+      infoMap['db'] = db;
+    } catch (e) {}
+
+    // numres
+    try {
+      infoMap['numres'] = numres;
+    } catch (e) {}
+
     return jsonEncode(infoMap);
   }
 
@@ -51,6 +69,16 @@ class ImageSearcherConfig {
     // header
     try {
       header = infoMap['header'];
+    } catch (e) {}
+
+    // db
+    try {
+      db = infoMap['db'];
+    } catch (e) {}
+
+    // numres
+    try {
+      numres = infoMap['numres'];
     } catch (e) {}
   }
 }
