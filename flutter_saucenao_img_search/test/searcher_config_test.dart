@@ -7,7 +7,8 @@ void main() {
     test("ImageSearcherConfig toString()", () {
       ImageSearcherConfig config =
           ImageSearcherConfig(apiKey: "123", header: '456');
-      expect(config.toString(), '{"apiKey":"123","header":"456"}');
+      expect(config.toString(),
+          '{"apiKey":"123","header":"456","db":999,"numres":3}');
     });
 
     test("ImageSearcherConfig fromString()", () {

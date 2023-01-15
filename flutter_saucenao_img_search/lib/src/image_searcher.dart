@@ -1,10 +1,10 @@
 /// Provide ImageSearcher class
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import 'searcher_config.dart';
+import 'exceptions.dart';
 
 class ImageSearcher {
   /// The config of the searcher
@@ -14,7 +14,7 @@ class ImageSearcher {
   _UserInfo user = _UserInfo();
 
   /// init
-  ImageSearcher({required this.searcherConfig, Uri? uri}) {}
+  ImageSearcher({required this.searcherConfig, Uri? uri});
 
   /// Search Image from Uri
   Future uri(
@@ -122,24 +122,3 @@ class _LimitInfo {
 
 // ---------------------------------------------------
 
-/// SauceNAO API Exception class, usually be called when SauceNAO API returns info
-/// with status==-1
-class ApiStatusException implements Exception {
-  Map? infoMap;
-  ApiStatusException({this.infoMap}) {}
-
-  String get apiErrMsg {
-    try {
-      return infoMap!['header']['message'];
-    } catch (e) {
-      return 'Unknown API Error Message';
-    }
-  }
-
-  @override
-  String toString() {
-    return 'ApiStatusException: Unexpected Api Return format or '
-        'Invalid return info: '
-        '$apiErrMsg';
-  }
-}
