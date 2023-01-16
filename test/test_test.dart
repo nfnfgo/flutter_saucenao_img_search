@@ -1,60 +1,29 @@
-createPersonBySex(String sex, String name,
-    {int salary = 0, int beautyIndex = 0}) {
-  return Person.fromSex(sex, name, salary: salary, beautyIndex: beautyIndex);
-}
+class A {
+  int a;
+  int b;
 
-class Person {
-  String name;
-  factory Person.fromSex(String sex, String name,
-      {int salary = 0, int beautyIndex = 0}) {
-    if (sex == 'male') {
-      return Male(name, salary);
-    } else if (sex == 'female') {
-      return Female(name, beautyIndex);
-    }
-    return Person(name);
+  A(this.a, this.b);
+
+  void printa() {
+    print(this.a);
   }
 
-  Person(this.name);
-
-  void printInfo() {
-    print('name: $name');
+  void printb() {
+    print(this.b);
   }
 }
 
-class Male extends Person {
-  int salary;
-
-  Male(super.name, this.salary);
-
+class B extends A {
+  B(this.a, this.b) : super(1, 2);
+  int a;
   @override
-  void printInfo() {
-    super.printInfo();
-    print('salary: $salary');
-  }
-}
-
-class Female extends Person {
-  int beautyIndex;
-
-  Female(super.name, this.beautyIndex);
-
-  @override
-  void printInfo() {
-    super.printInfo();
-    print('beautyIndex: $beautyIndex');
-  }
+  int b;
 }
 
 void main() {
-  var person = createPersonBySex('female', 'Linda', beautyIndex: 5);
-  print(person.runtimeType);
-  print(person.beautyIndex);
-
-  var person2 = Person.fromSex('female', 'Linda', beautyIndex: 5);
-  print(person2.runtimeType);
-  if (person2 is Female) {
-    Female femalePerson = person2;
-    print(femalePerson.beautyIndex);
-  }
+  B b = B(3, 4);
+  print(b.a);
+  b.printa();
+  print(b.b);
+  b.printb();
 }
