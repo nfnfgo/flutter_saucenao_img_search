@@ -45,7 +45,7 @@ class SourcePlatform {
   /// Returns a specified SourcePlatform type based on a Map.
   ///
   /// The structure of the map should be in SauceNAO Api style,
-  /// check [Json Example](../lib/api_example/search_result_raw_info.json) for more info
+  /// check lib/api_example for more info
   factory SourcePlatform.fromMap() {
     ;
   }
