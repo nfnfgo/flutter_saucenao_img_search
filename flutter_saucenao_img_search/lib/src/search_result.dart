@@ -36,10 +36,21 @@ class SearchResult {
 
 class SourcePlatform {
   // static const unknown;
+  static final pixiv = SourcePlatform._interval('Pixiv');
+  static final twitter = SourcePlatform._interval('Twitter');
+  static final unknown = SourcePlatform._interval('Unknown');
 
+  final String displayName;
+
+  /// Returns a specified SourcePlatform type based on a Map.
+  ///
+  /// The structure of the map should be in SauceNAO Api style,
+  /// check [Json Example](../lib/api_example/search_result_raw_info.json) for more info
   factory SourcePlatform.fromMap() {
     ;
   }
+
+  SourcePlatform._interval(String name) : displayName = name;
 }
 
 /// Search result item base class
