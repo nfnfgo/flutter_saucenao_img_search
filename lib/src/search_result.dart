@@ -92,6 +92,25 @@ class SearchResultItem {
   /// e.g.: `Index #5: Pixiv Images - 54061660_p0_master1200.jpg`
   String? indexInfo;
 
+  /// The index name of the source platform
+  ///
+  /// e.g.: `Pixiv Image`
+  String? get indexName {
+    // return if indexInfo is null
+    if (indexInfo == null) {
+      return null;
+    }
+    // create regex expression and try to match indexInfo
+    RegExp exp = RegExp(r'^Index #([0-9]*): (.*) -');
+    RegExpMatch? matchRes = exp.firstMatch(indexInfo!);
+    // if no match result
+    if (matchRes == null) {
+      return null;
+    }
+    // has result
+    return matchRes.group(2);
+  }
+
   /// The index id of the source platform, check SauceNAO for more info
   int? indexId;
 
@@ -218,7 +237,58 @@ class PixivSearchResultItem extends SearchResultItem {
 }
 
 class DanbooruSearchResultItem extends SearchResultItem {
+  /// The ID of the image in Danbooru
+  int? danbooruId;
+
+  /// Danbooru field. The material of  the image, usually an anime name.
+  ///
+  /// e.g.: `Re.0`, `hyouka`
+  String? material;
+
+  /// Danbooru field, The characters in the picture
+  ///
+  /// e.g.: `chitanda eru`
+  String? character;
+
+  /// Crerate a BanbooruSearchResultItem from Map type object.
+  ///
+  /// About the Map sturcture, see at
+  /// `lib/api_example/search_result_raw_info_danbooru.json`
   DanbooruSearchResultItem.fromMap(infoMap) : super.fromMap(infoMap) {
-    ;
+    // danbooru id
+    try {
+      danbooruId = infoMap['data']['danbooru_id'];
+    } catch (e) {}
+
+    // creater (artisit in super class)
+    try {
+      artist = infoMap['data']['creator'];
+    } catch (e) {}
+
+    // material
+    try {
+      material = infoMap['data']['material'];
+    } catch (e) {}
+
+    // characters
+    try {
+      character = infoMap['data']['characters'];
+    } catch (e) {}
+
+    // override title in super class
+    try {
+      String titleTmp = artist ?? '';
+      // Decide if need to add bracket
+      titleTmp += (artist != null ? ' ' : '');
+      titleTmp += material ?? '';
+      titleTmp += (material != null ? ' ' : '');
+      titleTmp += character ?? '';
+      title = titleTmp;
+    } catch (e) {}
   }
+}
+
+/// Twitter search result item.
+class TwitterSearchResultItem extends SearchResultItem {
+  TwitterSearchResultItem.fromMap(infoMap) : super.fromMap(infoMap);
 }

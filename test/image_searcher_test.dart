@@ -15,7 +15,8 @@ void main() {
     group("uri:", () {
       test('uri method', () async {
         await imgSearcher.uri(
-            uriStr: 'https://s1.ax1x.com/2023/01/14/pSQp19s.png');
+            uriStr:
+                'https://pbs.twimg.com/media/FmWFWu4agAEGo7P?format=jpg&name=large');
       });
     });
     group("Exceptions:", () {

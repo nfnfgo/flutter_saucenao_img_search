@@ -33,9 +33,9 @@ class ImageSearcher {
       uri = Uri.parse(uriStr);
 
       // construct request uri
-      Uri requestUri = Uri.parse('https://saucenao.com/search.php');
+      Uri requestLink = Uri.parse('https://saucenao.com/search.php');
       // set params
-      requestUri = requestUri.replace(queryParameters: <String, dynamic>{
+      requestLink = requestLink.replace(queryParameters: <String, dynamic>{
         'url': uri.toString(),
         'api_key': searcherConfig.apiKey,
         'db': searcherConfig.db.toString(),
@@ -44,7 +44,7 @@ class ImageSearcher {
       });
 
       // request API
-      var res = await http.get(requestUri);
+      var res = await http.get(requestLink);
 
       String resJson = utf8.decode(res.bodyBytes);
       Map infoMap = jsonDecode(resJson);
@@ -57,7 +57,7 @@ class ImageSearcher {
       // update SauceNAO user info
       user.update(infoMap);
 
-      print(user.limit.long);
+      print(resJson);
     }
   }
 }
