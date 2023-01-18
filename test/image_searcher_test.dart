@@ -14,9 +14,12 @@ void main() {
   group("ImageSearcher:", () {
     group("uri:", () {
       test('uri method', () async {
-        await imgSearcher.uri(
+        SearchResult? res = await imgSearcher.uri(
             uriStr:
                 'https://pbs.twimg.com/media/FmWFWu4agAEGo7P?format=jpg&name=large');
+        if (res?.resultItemsList == null) {
+          throw Exception('No return value');
+        }
       });
     });
     group("Exceptions:", () {
@@ -26,3 +29,5 @@ void main() {
     });
   });
 }
+
+// 

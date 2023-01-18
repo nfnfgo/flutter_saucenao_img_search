@@ -1,39 +1,77 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+[![issues](https://img.shields.io/github/issues/nfnfgo/flutter_saucenao_img_search?logo=github)](https://github.com/nfnfgo/flutter_saucenao_img_search/issues) [![commit](https://img.shields.io/github/last-commit/nfnfgo/flutter_saucenao_img_search?logo=github)](https://github.com/nfnfgo/flutter_saucenao_img_search/commits)
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
+# Introduction
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
+An convenient way to use [SauceNAO](http://saucenao.com) API in `Flutter/Dart`
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+# Quick start
 
-## Features
+## Install
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+You can update the Flutter project `pubspec.yaml` file to add package dependency.
 
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
+```yaml
+dependencies:
+  ...
+  flutter_saucenao_img_search:
+    git:
+      url: https://github.com/nfnfgo/flutter_saucenao_img_search.git
+      ref: main
 ```
 
-## Additional information
+After updating `pubspec.yaml`, you may need to restart your IDE.
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+## Initialization
+
+
+
+```dart
+import 'package:flutter_saucenao_img_search/flutter_saucenao_img_search.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+void main() async {
+  {
+    // Create ImageSearcher
+    ImageSearcher imgSearcher = ImageSearcher(
+      searcherConfig: ImageSearcherConfig(
+          apiKey: '29ca4c0cb14c11a8c891f2fbadb3ce473097f585'),
+    );
+
+    // Search Picture by uri
+    SearchResult? result = await imgSearcher.uri(
+      uriStr:
+          'https://pbs.twimg.com/media/FmWFWu4agAEGo7P?format=jpg&name=large',
+    );
+
+    if (result != null) {
+      for (SearchResultItem resultItem in result.resultItemsList) {
+        print('-----------------------------------------------');
+        print('Thumbnail: ${resultItem.thumbnailLink}');
+        // Actually, the items in resultItemsList could be the subtype of the
+        // SearchResult*tem class, such as PixivSearchResultItem, which contains
+        // more info of some specified platform
+        if (resultItem is PixivSearchResultItem) {
+          print('PixivID: ${resultItem.pixivId}');
+          print('Pixiv User Page: ${resultItem.artistLink}');
+        }
+        print('Source Links: ${resultItem.sourceLinksList}');
+      }
+    }
+  }
+}
+```
+
+If you run the code in Dart, you could get below output
+
+```
+Thumbnail: https://img1.saucenao.com/res/pixiv/10449/manga/104491469_p1.jpg?auth=ZpchuXwRGpw9dYG3BvU-zg&exp=1674590400
+PixivID: 104491469
+Pixiv User Page: https://www.pixiv.net/users/212801
+Source Links: [https://www.pixiv.net/member_illust.php?mode=medium&illust_id=104491469]
+-----------------------------------------------
+Thumbnail: https://img3.saucenao.com/booru/0/6/0689c9516d7e95987e34820ece877cd4_2.jpg?auth=luScLjJjXOP6MJ1OHKFWzQ&exp=1674590400
+Source Links: [https://danbooru.donmai.us/post/show/5979370, https://yande.re/post/show/1054789, https://gelbooru.com/index.php?page=post&s=view&id=8128874]
+-----------------------------------------------
+Thumbnail: https://img3.saucenao.com/booru/d/1/d150c1887bd1e0a33a4e014cdca712ba_2.jpg?auth=8n5L2vv1CAitOUWfYWp2JA&exp=1674590400
+Source Links: [https://danbooru.donmai.us/post/show/5979362, https://gelbooru.com/index.php?page=post&s=view&id=8128881]
+```

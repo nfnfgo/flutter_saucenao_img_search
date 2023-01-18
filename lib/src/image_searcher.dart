@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'searcher_config.dart';
+import 'search_result.dart';
 import 'exceptions.dart';
 
 class ImageSearcher {
@@ -17,7 +18,7 @@ class ImageSearcher {
   ImageSearcher({required this.searcherConfig, Uri? uri});
 
   /// Search Image from Uri
-  Future uri(
+  Future<SearchResult?> uri(
       {
       /// The Uri of the image that you want to search
       Uri? uri,
@@ -31,34 +32,35 @@ class ImageSearcher {
             "image_searcher.dart: " "uri and uriStr can not both be null");
       }
       uri = Uri.parse(uriStr);
-
-      // construct request uri
-      Uri requestLink = Uri.parse('https://saucenao.com/search.php');
-      // set params
-      requestLink = requestLink.replace(queryParameters: <String, dynamic>{
-        'url': uri.toString(),
-        'api_key': searcherConfig.apiKey,
-        'db': searcherConfig.db.toString(),
-        'output_type': '2',
-        'numres': searcherConfig.numres.toString(),
-      });
-
-      // request API
-      var res = await http.get(requestLink);
-
-      String resJson = utf8.decode(res.bodyBytes);
-      Map infoMap = jsonDecode(resJson);
-
-      // If meets Api Exception
-      if (infoMap['header']['status'] == -1) {
-        throw ApiStatusException(infoMap: infoMap);
-      }
-
-      // update SauceNAO user info
-      user.update(infoMap);
-
-      print(resJson);
     }
+    // construct request uri
+    Uri requestLink = Uri.parse('https://saucenao.com/search.php');
+    // set params
+    requestLink = requestLink.replace(queryParameters: <String, dynamic>{
+      'url': uri.toString(),
+      'api_key': searcherConfig.apiKey,
+      'db': searcherConfig.db.toString(),
+      // 'dbs[]': '41',
+      'output_type': '2',
+      'numres': searcherConfig.numres.toString(),
+    });
+
+    // request API
+    var res = await http.get(requestLink);
+
+    String resJson = utf8.decode(res.bodyBytes);
+    Map infoMap = jsonDecode(resJson);
+
+    // If meets Api Exception
+    if (infoMap['header']['status'] == -1) {
+      throw ApiStatusException(infoMap: infoMap);
+    }
+
+    // update SauceNAO user info
+    user.update(infoMap);
+
+    // Start constructing results
+    return SearchResult.fromMap(infoMap);
   }
 }
 

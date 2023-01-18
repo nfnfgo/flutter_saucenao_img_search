@@ -17,6 +17,8 @@ class ImageSearcherConfig {
   int db;
 
   /// SauceNAO API parameter. Check SauceNAO API Doc for more info
+
+  /// SauceNAO API parameter. Check SauceNAO API Doc for more info
   int numres;
 
   /// Create an ImageSearchConfig instance

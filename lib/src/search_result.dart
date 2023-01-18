@@ -4,8 +4,24 @@ import 'searcher_config.dart';
 import 'exceptions.dart';
 
 class SearchResult {
+  /// The title of the result image
+  String? title;
+
+  /// The search config used in this result
+  ImageSearcherConfig? config;
+
+  /// The search results of the image. could be the class SearchResultItem or
+  /// it's subclass, such as PixivSearchResultItem
+  List<dynamic> resultItemsList = [];
+
+  /// The number of the image result.
+  int get resultCnt {
+    return resultItemsList.length;
+  }
+
   /// Create SearchResult Instance from a map
   SearchResult.fromMap(infoMap) {
+    resultItemsList.clear();
     // Get results map list
     List resultMapList = [];
     try {
@@ -15,20 +31,11 @@ class SearchResult {
     }
 
     // iterate all result
-  }
-
-  /// The title of the result image
-  String? title;
-
-  /// The search config used in this result
-  ImageSearcherConfig? config;
-
-  /// Search Image source result list
-  List<SearchResultItem> resultItemsList = [];
-
-  /// The number of the image result.
-  int get resultCnt {
-    return resultItemsList.length;
+    for (var infoMap in resultMapList) {
+      if (infoMap is Map) {
+        resultItemsList.add(SearchResultItem.createByType(infoMap));
+      }
+    }
   }
 }
 
@@ -128,7 +135,7 @@ class SearchResultItem {
 
   /// Factory constructor, returns different subtypes of `SearchResultItem` such as
   /// `PixivSearchResultItem`, `TwitterSearchResultItem`.
-  factory SearchResultItem.createByType(Map infoMap) {
+  factory SearchResultItem._createByType(Map infoMap) {
     int indexId;
     try {
       indexId = infoMap['header']['index_id'];
@@ -137,12 +144,19 @@ class SearchResultItem {
           'Failed to get index_id in search header field');
     }
 
-    // pixiv
     if (indexId == 5) {
       return PixivSearchResultItem.fromMap(infoMap);
+    } else if (indexId == 9) {
+      return DanbooruSearchResultItem.fromMap(infoMap);
+    } else if (indexId == 41) {
+      return TwitterSearchResultItem.fromMap(infoMap);
     } else {
       return SearchResultItem.fromMap(infoMap);
     }
+  }
+
+  static createByType(Map infoMap) {
+    return SearchResultItem._createByType(infoMap);
   }
 
   /// Default Initializer, do nothing
@@ -290,5 +304,30 @@ class DanbooruSearchResultItem extends SearchResultItem {
 
 /// Twitter search result item.
 class TwitterSearchResultItem extends SearchResultItem {
-  TwitterSearchResultItem.fromMap(infoMap) : super.fromMap(infoMap);
+  /// The Twitter Post ID of the image
+  int? tweetId;
+
+  /// The twitter handle of the user
+  String? userHandle;
+
+  /// The Twitter User Page of the user
+  String? get userLink {
+    if (userHandle == null) {
+      return null;
+    }
+    return 'https://twitter.com/$userHandle';
+  }
+
+  TwitterSearchResultItem.fromMap(infoMap) : super.fromMap(infoMap) {
+    // artist (twitter user handle)
+    try {
+      artist = infoMap['data']['twitter_user_handle'];
+      userHandle = artist;
+    } catch (e) {}
+
+    // tweetId
+    try {
+      tweetId = int.parse(infoMap['data']['tweet_id']);
+    } catch (e) {}
+  }
 }

@@ -86,6 +86,28 @@ void main() {
       ]);
     });
   });
+
+  group('TwitterSearchResultItem:', () {
+    TwitterSearchResultItem result =
+        TwitterSearchResultItem.fromMap(twitterInfoMap);
+    test('title', () {
+      expect(result.title, null);
+    });
+    test('twitterID', () {
+      expect(result.tweetId, 590034672601567232);
+    });
+    test('userHandle', () {
+      expect(result.userHandle, 'hue_nanairo');
+    });
+    test('userLink', () {
+      expect(result.userLink, 'https://twitter.com/hue_nanairo');
+    });
+
+    test('sourceLink', () {
+      expect(result.sourceLinksList,
+          ["https:\/\/twitter.com\/i\/web\/status\/590034672601567232"]);
+    });
+  });
 }
 
 // -----------------------------------------------------------------
@@ -133,5 +155,25 @@ Map danbooruInfoMap = jsonDecode('''{
         "material": "hyouka",
         "characters": "chitanda eru",
         "source": "http:\/\/i1.pixiv.net\/img-original\/img\/2015\/12\/16\/00\/55\/44\/54061660"
+    }
+}''');
+
+Map twitterInfoMap = jsonDecode('''{
+    "header": {
+        "similarity": "41.69",
+        "thumbnail": "https:\/\/img3.saucenao.com\/twitter\/5\/7\/K\/CDA5ZkQUgAEB57K.jpg?auth=pOH8kb3zieXgc742ogp0NQ\u0026exp=1674590400",
+        "index_id": 41,
+        "index_name": "Index #41: Twitter - CDA5ZkQUgAEB57K.jpg",
+        "dupes": 0,
+        "hidden": 0
+    },
+    "data": {
+        "ext_urls": [
+            "https:\/\/twitter.com\/i\/web\/status\/590034672601567232"
+        ],
+        "created_at": "2015-04-20T06:10:02Z",
+        "tweet_id": "590034672601567232",
+        "twitter_user_id": "188947814",
+        "twitter_user_handle": "hue_nanairo"
     }
 }''');
