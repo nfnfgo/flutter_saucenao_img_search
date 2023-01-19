@@ -8,7 +8,13 @@ An convenient way to use [SauceNAO](http://saucenao.com) API in `Flutter/Dart`
 
 ## Install
 
-You can update the Flutter project `pubspec.yaml` file to add package dependency.
+A convenient way to add denpendency of this package to your project is run pub command in your project
+
+```
+flutter pub add flutter_saucenao_img_search
+```
+
+Besides, You can still update the Flutter project `pubspec.yaml` file to add package dependency.
 
 ```yaml
 dependencies:

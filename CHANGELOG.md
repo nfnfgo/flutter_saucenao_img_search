@@ -1,6 +1,6 @@
-## 0.1.1
+## 0.1.2
 - Update README.md
-- Add some code comments
+- Fix the issue that `SourcePlatform` class never return `twitter`
 
 ## 0.1.0
 - Add `ImageSearcher.file()` and `ImageSearcher.uri()`
