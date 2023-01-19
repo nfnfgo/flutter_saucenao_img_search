@@ -4,6 +4,10 @@
 
 An convenient way to use [SauceNAO](http://saucenao.com) API in `Flutter/Dart`
 
+# Document
+
+https://pub.dev/documentation/flutter_saucenao_img_search/latest/
+
 # Quick start
 
 ## Install
