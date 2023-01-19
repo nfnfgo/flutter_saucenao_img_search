@@ -65,8 +65,36 @@ class ImageSearcher {
   }
 
   /// Search image by image file
-  imageFile(File image) {
-    ;
+  /// "C:\相册\壁纸\小垃圾.png"
+  Future<SearchResult?> file(File image) async {
+    // Construct Request URI
+    Uri requestLink = Uri.parse('https://saucenao.com/search.php');
+    // set params
+    requestLink = requestLink.replace(queryParameters: <String, dynamic>{
+      'api_key': searcherConfig.apiKey,
+      'db': searcherConfig.db.toString(),
+      // 'dbs[]': '41',
+      'output_type': '2',
+      'numres': searcherConfig.numres.toString(),
+    });
+
+    // Create Multipart Request instance
+    http.MultipartRequest request = http.MultipartRequest(
+      'POST',
+      requestLink,
+    );
+    request.files.add(await http.MultipartFile.fromPath('file', image.path));
+
+    var res = await request.send();
+    String jsonStr;
+    try {
+      jsonStr = await res.stream.bytesToString();
+    } catch (e) {
+      throw ApiContentException('Failed to parse byte data from SauceNAO');
+    }
+    Map infoMap = jsonDecode(jsonStr);
+
+    return SearchResult.fromMap(infoMap);
   }
 }
 

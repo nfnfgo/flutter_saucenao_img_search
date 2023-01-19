@@ -1,18 +1,17 @@
 import 'package:flutter_saucenao_img_search/flutter_saucenao_img_search.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'dart:io';
 
 void main() async {
   {
     // Create ImageSearcher
     ImageSearcher imgSearcher = ImageSearcher(
-      searcherConfig: ImageSearcherConfig(apiKey: 'YOUR_API_KEY'),
+      searcherConfig: ImageSearcherConfig(
+          apiKey: '29ca4c0cb14c11a8c891f2fbadb3ce473097f585'),
     );
 
     // Search Picture by uri
-    SearchResult? result = await imgSearcher.uri(
-      uriStr:
-          'https://pbs.twimg.com/media/FmWFWu4agAEGo7P?format=jpg&name=large',
-    );
+    SearchResult? result = await imgSearcher.file(File(r'C:\相册\壁纸\小垃圾.png'));
 
     if (result != null) {
       for (SearchResultItem resultItem in result.resultItemsList) {

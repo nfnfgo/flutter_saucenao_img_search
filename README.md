@@ -77,5 +77,10 @@ Source Links: [https://danbooru.donmai.us/post/show/5979362, https://gelbooru.co
 
 ## Search Pictures By File
 
-If you want to search pictures on your local device, you could use `ImageSeacher.file()`. Here is a simple example of searching pictures by files
+If you want to search pictures on your local device, you could use `ImageSeacher.file()`. Just replace the code example below
 
+```Dart
+SearchResult? result = await imgSearcher.file(
+  File(r'YOUR_FILE_PATH_HERE'),
+);
+```

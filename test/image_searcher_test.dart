@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
@@ -17,6 +18,14 @@ void main() {
         SearchResult? res = await imgSearcher.uri(
             uriStr:
                 'https://pbs.twimg.com/media/FmWFWu4agAEGo7P?format=jpg&name=large');
+        if (res?.resultItemsList == null) {
+          throw Exception('No return value');
+        }
+      });
+    });
+    group("file:", () {
+      test('file method', () async {
+        SearchResult? res = await imgSearcher.file(File(r'C:\相册\壁纸\小垃圾.png'));
         if (res?.resultItemsList == null) {
           throw Exception('No return value');
         }
