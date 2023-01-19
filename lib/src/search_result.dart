@@ -58,6 +58,8 @@ class SourcePlatform {
       return pixiv;
     } else if (indexId == 9) {
       return danbooru;
+    } else if (indexId == 41) {
+      return twitter;
     } else {
       return other;
     }
