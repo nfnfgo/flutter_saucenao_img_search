@@ -155,6 +155,7 @@ class SearchResultItem {
     }
   }
 
+  /// Returns a dynamic type object which is `SearchResultItem` or its sub-class
   static createByType(Map infoMap) {
     return SearchResultItem._createByType(infoMap);
   }

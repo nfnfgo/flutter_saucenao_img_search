@@ -8,12 +8,14 @@ import 'searcher_config.dart';
 import 'search_result.dart';
 import 'exceptions.dart';
 
+/// ImageSearcher class, create an ImageSearcher instance to search images by
+/// URI or File type object
 class ImageSearcher {
   /// The config of the searcher
   ImageSearcherConfig searcherConfig;
 
   /// The SauceNAO user info such as account type and account search limit
-  _UserInfo user = _UserInfo();
+  UserInfo user = UserInfo();
 
   /// init
   ImageSearcher({required this.searcherConfig, Uri? uri});
@@ -64,9 +66,11 @@ class ImageSearcher {
     return SearchResult.fromMap(infoMap);
   }
 
-  /// Search image by image file
-  /// "C:\相册\壁纸\小垃圾.png"
-  Future<SearchResult?> file(File image) async {
+  /// Search image by files
+  Future<SearchResult?> file(
+
+      /// The file that you want to search
+      File image) async {
     // Construct Request URI
     Uri requestLink = Uri.parse('https://saucenao.com/search.php');
     // set params
@@ -101,7 +105,9 @@ class ImageSearcher {
 // -----------------------------------------------------------
 // UserInfo and LimitInfo
 
-class _UserInfo {
+/// SauceNAO UserInfo class, contains user type, user id,
+/// and user API limit info
+class UserInfo {
   /// The SauceNAO Id of the user
   int? id;
   // The user type of the user, check SauceNAO website for more info
@@ -111,7 +117,7 @@ class _UserInfo {
   int? requested;
 
   /// The limit info of this user
-  _LimitInfo limit = _LimitInfo();
+  LimitInfo limit = LimitInfo();
 
   void update(Map infoMap) {
     try {
@@ -131,22 +137,28 @@ class _UserInfo {
       } catch (e) {}
 
       // limit
-      limit = _LimitInfo.fromInfoMap(infoMap);
+      limit = LimitInfo.fromInfoMap(infoMap);
     } catch (e) {}
   }
 }
 
-class _LimitInfo {
+/// SauceNAO user limit info. Contains Long/Short limit info.
+///
+/// About the limit of SauceNAO API, please check
+/// [SauceNAO Official Website](https://saucenao.com)
+/// for more info
+class LimitInfo {
   int? short;
   int? long;
   int? shortRemaining;
   int? longRemaining;
 
-  _LimitInfo() {
+  LimitInfo() {
     ;
   }
 
-  _LimitInfo.fromInfoMap(infoMap) {
+  /// Create user limit info from `Map` type object
+  LimitInfo.fromInfoMap(infoMap) {
     try {
       short = int.parse(infoMap['header']['short_limit']);
       long = int.parse(infoMap['header']['long_limit']);
@@ -157,4 +169,3 @@ class _LimitInfo {
 }
 
 // ---------------------------------------------------
-

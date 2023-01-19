@@ -1,5 +1,4 @@
 import 'package:flutter_saucenao_img_search/flutter_saucenao_img_search.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'dart:io';
 
 void main() async {
