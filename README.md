@@ -1,4 +1,4 @@
-[![pub](https://img.shields.io/pub/v/flutter_saucenao_img_search?label=pub&logo=dart)](https://pub.dev/packages/flutter_smart_dialog/install) [![issues](https://img.shields.io/github/issues/nfnfgo/flutter_saucenao_img_search?logo=github)](https://github.com/nfnfgo/flutter_saucenao_img_search/issues) [![commit](https://img.shields.io/github/last-commit/nfnfgo/flutter_saucenao_img_search?logo=github)](https://github.com/nfnfgo/flutter_saucenao_img_search/commits)
+[![pub](https://img.shields.io/pub/v/flutter_saucenao_img_search?label=pub&logo=dart)](https://pub.dev/packages/flutter_saucenao_img_search/install) [![issues](https://img.shields.io/github/issues/nfnfgo/flutter_saucenao_img_search?logo=github)](https://github.com/nfnfgo/flutter_saucenao_img_search/issues) [![commit](https://img.shields.io/github/last-commit/nfnfgo/flutter_saucenao_img_search?logo=github)](https://github.com/nfnfgo/flutter_saucenao_img_search/commits)
 
 # Introduction
 
