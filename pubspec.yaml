@@ -1,6 +1,6 @@
 name: flutter_saucenao_img_search
 description: A library that allows you to search anime image's source in flutter.
-version: 0.0.1
+version: 0.1.0
 homepage: "https://github.com/nfnfgo/flutter_saucenao_img_search"
 
 environment:
