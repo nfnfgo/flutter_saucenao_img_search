@@ -1,6 +1,7 @@
 /// Provide ImageSearcher class
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 
 import 'searcher_config.dart';
@@ -61,6 +62,11 @@ class ImageSearcher {
 
     // Start constructing results
     return SearchResult.fromMap(infoMap);
+  }
+
+  /// Search image by image file
+  imageFile(File image) {
+    ;
   }
 }
 

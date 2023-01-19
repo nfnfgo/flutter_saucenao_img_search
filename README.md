@@ -21,9 +21,7 @@ dependencies:
 
 After updating `pubspec.yaml`, you may need to restart your IDE.
 
-## Initialization
-
-
+## Search Picture by URI
 
 ```dart
 import 'package:flutter_saucenao_img_search/flutter_saucenao_img_search.dart';
@@ -76,3 +74,8 @@ Source Links: [https://danbooru.donmai.us/post/show/5979370, https://yande.re/po
 Thumbnail: https://img3.saucenao.com/booru/d/1/d150c1887bd1e0a33a4e014cdca712ba_2.jpg?auth=8n5L2vv1CAitOUWfYWp2JA&exp=1674590400
 Source Links: [https://danbooru.donmai.us/post/show/5979362, https://gelbooru.com/index.php?page=post&s=view&id=8128881]
 ```
+
+## Search Pictures By File
+
+If you want to search pictures on your local device, you could use `ImageSeacher.file()`. Here is a simple example of searching pictures by files
+
