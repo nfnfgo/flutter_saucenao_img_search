@@ -4,10 +4,6 @@
 
 An convenient way to use [SauceNAO](http://saucenao.com) API in `Flutter/Dart`
 
-# Document
-
-https://pub.dev/documentation/flutter_saucenao_img_search/latest/
-
 # Quick start
 
 ## Install
@@ -94,3 +90,9 @@ SearchResult? result = await imgSearcher.file(
   File(r'YOUR_FILE_PATH_HERE'),
 );
 ```
+
+You could also read the package [API Reference Document](https://pub.dev/documentation/flutter_saucenao_img_search/latest/)
+
+# API Reference Document
+
+https://pub.dev/documentation/flutter_saucenao_img_search/latest/
