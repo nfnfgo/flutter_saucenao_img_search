@@ -27,7 +27,7 @@ class SearchResult {
     try {
       resultMapList = infoMap['results'];
     } catch (e) {
-      throw ApiContentException('Failed to get results');
+      throw genApiErrorFromInfoMap(infoMap);
     }
 
     // iterate all result
@@ -352,3 +352,71 @@ class TwitterSearchResultItem extends SearchResultItem {
     } catch (e) {}
   }
 }
+
+// -----------------------------------------------------------
+// UserInfo and LimitInfo
+
+/// SauceNAO UserInfo class, contains user type, user id,
+/// and user API limit info
+class UserInfo {
+  /// The SauceNAO Id of the user
+  int? id;
+  // The user type of the user, check SauceNAO website for more info
+  int? type;
+
+  /// The total successful request count of this account
+  int? requested;
+
+  /// The limit info of this user
+  LimitInfo limit = LimitInfo();
+
+  void update(Map infoMap) {
+    try {
+      // If API Exception
+      if (infoMap['header']['status'] == -1) {
+        return;
+      }
+
+      // id
+      try {
+        id = int.parse(infoMap['header']['user_id']);
+      } catch (e) {}
+
+      // type
+      try {
+        id = int.parse(infoMap['header']['account_type']);
+      } catch (e) {}
+
+      // limit
+      limit = LimitInfo.fromInfoMap(infoMap);
+    } catch (e) {}
+  }
+}
+
+/// SauceNAO user limit info. Contains Long/Short limit info.
+///
+/// About the limit of SauceNAO API, please check
+/// [SauceNAO Official Website](https://saucenao.com)
+/// for more info
+class LimitInfo {
+  int? short;
+  int? long;
+  int? shortRemaining;
+  int? longRemaining;
+
+  LimitInfo() {
+    ;
+  }
+
+  /// Create user limit info from `Map` type object
+  LimitInfo.fromInfoMap(infoMap) {
+    try {
+      short = int.parse(infoMap['header']['short_limit']);
+      long = int.parse(infoMap['header']['long_limit']);
+      shortRemaining = int.parse(infoMap['header']['short_remaining']);
+      longRemaining = int.parse(infoMap['header']['long_remaining']);
+    } catch (e) {}
+  }
+}
+
+// ---------------------------------------------------

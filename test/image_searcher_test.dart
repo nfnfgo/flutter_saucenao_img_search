@@ -10,7 +10,7 @@ void main() {
   setUp(() {
     imgSearcher = ImageSearcher(
         searcherConfig: ImageSearcherConfig(
-            apiKey: "29ca4c0cb14c11a8c891f2fbadb3ce473097f585"));
+            apiKey: "969c77690e966f14c2b82425148a4abd005fccb2"));
   });
   group("ImageSearcher:", () {
     group("uri:", () {
