@@ -17,7 +17,7 @@ void main() {
       test('uri method', () async {
         SearchResult? res = await imgSearcher.uri(
             uriStr:
-                'https://pbs.twimg.com/media/FmWFWu4agAEGo7P?format=jpg&name=large');
+                'https://i.pximg.net/img-original/img/2022/09/04/18/00/00/100993099_p0.png');
         if (res?.resultItemsList == null) {
           throw Exception('No return value');
         }

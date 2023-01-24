@@ -204,6 +204,24 @@ class SearchResultItem {
     try {
       indexInfo = infoMap['header']['index_name'];
     } catch (e) {}
+
+    // default title
+    try {
+      title = '';
+      Map data = infoMap['data'];
+      List dataList = data.values.toList();
+      for (var listItem in dataList) {
+        if (listItem.runtimeType == String) {
+          if (listItem.startsWith('http')) {
+            continue;
+          }
+          title = title! + listItem + ' / ';
+        }
+      }
+      if (title!.endsWith(' / ')) {
+        title = title!.substring(0, title!.length - 3);
+      }
+    } catch (e) {}
   }
 }
 

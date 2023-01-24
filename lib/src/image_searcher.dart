@@ -23,6 +23,7 @@ class ImageSearcher {
   /// Search Image from Uri
   Future<SearchResult?> uri(
       {
+
       /// The Uri of the image that you want to search
       Uri? uri,
 
