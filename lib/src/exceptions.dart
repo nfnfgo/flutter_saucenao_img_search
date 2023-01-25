@@ -20,6 +20,10 @@ class ApiStatusException implements Exception {
   }
 }
 
+/// Thrown when failed to parse/read data from the API returns info.
+///
+/// This exception may causes by several reasons. For example, maybe SauceNAO
+/// update it's API return format or API just return some unexpected field
 class ApiContentException implements Exception {
   String? errMsg;
 
@@ -34,6 +38,11 @@ class ApiContentException implements Exception {
   }
 }
 
+/// Thrown when your API Key arrived the Request Limit.
+///
+/// SauceNAO has its limit to each API pre day, free users has a shared daily
+/// limit pool based on IP address, try to change your IP address or update your
+/// SauceNAO account.
 class ApiLimitExceededException implements Exception {
   String? errMsg;
 
@@ -48,6 +57,10 @@ class ApiLimitExceededException implements Exception {
   }
 }
 
+/// Throw when your request frequency reach the SauceNAO API rate limit.
+///
+/// For exapmle, SauceNAO has 100 request/day **AND** 4 request/30sec for
+/// basic(free) users. check SauceNAO official website for more info.
 class ApiRateLimitExceededException implements Exception {
   String? errMsg;
 
@@ -81,4 +94,23 @@ genApiErrorFromInfoMap(Map infoMap) {
   }
   // Other Exception
   return ApiContentException('Failed to parse data from API returns info');
+}
+
+/// An exception throwed when `SearchResult` failed to parse data from the return
+/// Html data.
+///
+/// This excption may be threw when you call `ImageSearcher` noKey method, since the
+/// noKey method need to parse data from the return HTML data.
+class HtmlContentException implements Exception {
+  String? errMsg;
+
+  HtmlContentException(this.errMsg);
+
+  @override
+  String toString() {
+    if (errMsg == null) {
+      return 'HtmlContentException';
+    }
+    return 'HtmlContentException: $errMsg';
+  }
 }

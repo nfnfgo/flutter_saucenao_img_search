@@ -96,3 +96,12 @@ You could also read the package [API Reference Document](https://pub.dev/documen
 # API Reference Document
 
 https://pub.dev/documentation/flutter_saucenao_img_search/latest/
+
+
+# Advanced Guide
+
+## Exception
+
+This package uses some custom Exception class to help you catch and handle Exception more acurately.
+
+You can check Api Reference Document for more info about each custom Exception class.

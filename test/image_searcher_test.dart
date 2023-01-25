@@ -22,6 +22,10 @@ void main() {
           throw Exception('No return value');
         }
       });
+      test('uriNoKey Method', (() async {
+        SearchResult? res = await imgSearcher.uriNoKey(Uri.parse(
+            'https://i.pximg.net/img-master/img/2018/03/16/00/00/03/67752083_p0_master1200.jpg'));
+      }));
     });
     group("file:", () {
       test('file method', () async {
@@ -30,6 +34,10 @@ void main() {
           throw Exception('No return value');
         }
       });
+      test('fileNoKey method', (() async {
+        SearchResult? res =
+            await imgSearcher.fileNoKey(File(r'C:\相册\壁纸\小垃圾.png'));
+      }));
     });
     group("Exceptions:", () {
       test("uri method both null param", () {

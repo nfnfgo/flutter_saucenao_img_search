@@ -3,6 +3,10 @@
 import 'searcher_config.dart';
 import 'exceptions.dart';
 
+// Plugs
+import 'package:html/parser.dart';
+import 'package:html/dom.dart';
+
 class SearchResult {
   /// The title of the result image
   String? title;
@@ -37,6 +41,22 @@ class SearchResult {
       }
     }
   }
+
+  /// Construct SearchResult from HTML type String
+  SearchResult.fromHtml(String htmlStr) {
+    fromHtml();
+  }
+
+  void fromHtml(String htmlStr) {
+    Document? htmlDoc;
+    // try to parse html string to document type object
+    try {
+      htmlDoc = parse(htmlStr);
+    } catch (e) {
+      // if parse failed, return HtmlContentError
+      ;
+    }
+  }
 }
 
 class SourcePlatform {
@@ -44,6 +64,7 @@ class SourcePlatform {
   static final pixiv = SourcePlatform._interval('Pixiv');
   static final twitter = SourcePlatform._interval('Twitter');
   static final danbooru = SourcePlatform._interval('Danbooru');
+  static final website = SourcePlatform._interval('Website');
   static final other = SourcePlatform._interval('other');
 
   final String displayName;
@@ -350,6 +371,19 @@ class TwitterSearchResultItem extends SearchResultItem {
     try {
       tweetId = int.parse(infoMap['data']['tweet_id']);
     } catch (e) {}
+  }
+}
+
+/// The class to deal with result item.
+///
+/// This result item class is usually used when you use the
+/// `ImageSearcher` **noKey** search method, sincenoKey search method
+/// need to parse the original HTML data without the SauceNAO
+/// API Json return format support.
+class HtmlSearchResultItem extends SearchResultItem {
+  /// Construct HtmlSearchResultItem from HTML Element
+  HtmlSearchResultItem.fromElement() {
+    ;
   }
 }
 

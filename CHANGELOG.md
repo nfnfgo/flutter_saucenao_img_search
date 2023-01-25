@@ -1,3 +1,8 @@
+## 0.3.0
+- Try: Add search method that works without API Key
+- Update: Add new Exception class: `HtmlContentException`
+- Update: Add class comment to some Exception class
+
 ## 0.2.1
 - Update: Add new Exception type: `ApiRateLimitExceededException`
 
