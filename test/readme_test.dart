@@ -1,42 +1,20 @@
 import 'package:flutter_saucenao_img_search/flutter_saucenao_img_search.dart';
-import 'dart:io';
 
 void main() async {
-  {
-    // Create ImageSearcher
-    ImageSearcher imgSearcher = ImageSearcher(
-      searcherConfig: ImageSearcherConfig(
-          apiKey: '29ca4c0cb14c11a8c891f2fbadb3ce473097f585'),
-    );
-
-    // Search Picture by uri
-    SearchResult? result = await imgSearcher.file(File(r'C:\相册\壁纸\小垃圾.png'));
-
-    if (result != null) {
-      for (SearchResultItem resultItem in result.resultItemsList) {
-        print('-----------------------------------------------');
-        print('Thumbnail: ${resultItem.thumbnailLink}');
-        // Actually, the items in resultItemsList could be the subtype of the
-        // SearchResult*tem class, such as PixivSearchResultItem, which contains
-        // more info of some specified platform
-        if (resultItem is PixivSearchResultItem) {
-          print('PixivID: ${resultItem.pixivId}');
-          print('Pixiv User Page: ${resultItem.artistLink}');
-        }
-        print('Source Links: ${resultItem.sourceLinksList}');
-      }
-    }
+  // Create ImageSearcher instance
+  ImageSearcher searcher =
+      ImageSearcher(searcherConfig: ImageSearcherConfig(apiKey: ''));
+  // using noKey method
+  SearchResult? result =
+      await searcher.uriNoKey(Uri.parse('https://i.pximg.net/img-original/'
+          'img/2022/09/16/00/00/05/101250855_p0.png'));
+  if (result == null) {
+    throw Exception('Null Result!');
+  }
+  for (HtmlSearchResultItem item in result.resultItemsList) {
+    print(item.title ?? 'No Title');
+    print(item.sourceLinksList);
+    print(item.artist);
+    print('----------------------------------');
   }
 }
-
-// -----------------------------------------------
-// Thumbnail: https://img1.saucenao.com/res/pixiv/10449/manga/104491469_p1.jpg?auth=ZpchuXwRGpw9dYG3BvU-zg&exp=1674590400
-// PixivID: 104491469
-// Pixiv User Page: https://www.pixiv.net/users/212801
-// Source Links: [https://www.pixiv.net/member_illust.php?mode=medium&illust_id=104491469]
-// -----------------------------------------------
-// Thumbnail: https://img3.saucenao.com/booru/0/6/0689c9516d7e95987e34820ece877cd4_2.jpg?auth=luScLjJjXOP6MJ1OHKFWzQ&exp=1674590400
-// Source Links: [https://danbooru.donmai.us/post/show/5979370, https://yande.re/post/show/1054789, https://gelbooru.com/index.php?page=post&s=view&id=8128874]
-// -----------------------------------------------
-// Thumbnail: https://img3.saucenao.com/booru/d/1/d150c1887bd1e0a33a4e014cdca712ba_2.jpg?auth=8n5L2vv1CAitOUWfYWp2JA&exp=1674590400
-// Source Links: [https://danbooru.donmai.us/post/show/5979362, https://gelbooru.com/index.php?page=post&s=view&id=8128881]

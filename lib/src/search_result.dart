@@ -1,11 +1,10 @@
-/// Implement Search result class
-
-import 'searcher_config.dart';
-import 'exceptions.dart';
-
 // Plugs
 import 'package:html/parser.dart';
 import 'package:html/dom.dart';
+
+import 'html_tools.dart';
+import 'exceptions.dart';
+import 'searcher_config.dart';
 
 class SearchResult {
   /// The title of the result image
@@ -44,7 +43,7 @@ class SearchResult {
 
   /// Construct SearchResult from HTML type String
   SearchResult.fromHtml(String htmlStr) {
-    fromHtml();
+    fromHtml(htmlStr);
   }
 
   void fromHtml(String htmlStr) {
@@ -54,7 +53,22 @@ class SearchResult {
       htmlDoc = parse(htmlStr);
     } catch (e) {
       // if parse failed, return HtmlContentError
-      ;
+      throw HtmlContentException(
+        'Failed to parse the SauceNAO return data into html',
+        htmlStr: htmlStr,
+      );
+    }
+    // If Parse Html Successfully, start parsing
+    List<Element> resultElementList =
+        htmlDoc.getElementsByClassName('resulttable');
+    // Iterate all element and try to parse it into `HtmlSearchResultItem`
+    Element resultEle;
+    for (resultEle in resultElementList) {
+      try {
+        HtmlSearchResultItem resultItem =
+            HtmlSearchResultItem.fromElement(resultEle);
+        resultItemsList.add(resultItem);
+      } catch (e) {}
     }
   }
 }
@@ -381,9 +395,46 @@ class TwitterSearchResultItem extends SearchResultItem {
 /// need to parse the original HTML data without the SauceNAO
 /// API Json return format support.
 class HtmlSearchResultItem extends SearchResultItem {
+  HtmlSearchResultItem();
+
   /// Construct HtmlSearchResultItem from HTML Element
-  HtmlSearchResultItem.fromElement() {
-    ;
+  ///
+  /// Used for NoKey search method of `ImageSearcher`
+  ///
+  /// Notice: The artist is unavailble for `noKey` search method so it's meaningless
+  /// to access the `artist` field of `HtmlSearchResult`
+  HtmlSearchResultItem.fromElement(Element resultEle) {
+    // Similarity
+    try {
+      String similarityText =
+          resultEle.getElementsByClassName('resultsimilarityinfo')[0].text;
+      similarityText = similarityText.substring(0, similarityText.length - 1);
+      similarity = double.parse(similarityText);
+    } catch (e) {}
+
+    // thumbnail link & index info
+    try {
+      Element resultImageEle =
+          resultEle.getElementsByClassName('resultimage')[0];
+      String? infoHtmlText = resultImageEle.innerHtml;
+      thumbnailLink = HtmlTool.getHtmlInfo(html: infoHtmlText, type: 'src');
+      thumbnailLink = thumbnailLink?.replaceAll('&amp;', '&');
+      indexInfo = HtmlTool.getHtmlInfo(html: infoHtmlText, type: 'title');
+    } catch (e) {}
+
+    // source link & title
+    try {
+      Element resultContentEle =
+          resultEle.getElementsByClassName('resultcontent')[0];
+      // title
+      title = resultContentEle.getElementsByClassName('resulttitle')[0].text;
+      // link
+      sourceLinksList = [];
+      String linkHtml = resultContentEle.getElementsByTagName('a')[0].outerHtml;
+      String? linkStr = HtmlTool.getHtmlInfo(html: linkHtml, type: 'href');
+      linkStr = linkStr?.replaceAll('&amp;', '&');
+      sourceLinksList!.add(linkStr);
+    } catch (e) {}
   }
 }
 

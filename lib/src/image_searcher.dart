@@ -135,7 +135,7 @@ class ImageSearcher {
 
     var res = await request.send();
 
-    print(await res.stream.bytesToString());
+    return SearchResult.fromHtml(await res.stream.bytesToString());
   }
 
   /// (Beta) Search Image by Image URL without using API Key
@@ -146,6 +146,6 @@ class ImageSearcher {
     // request API
     var res = await http.post(requestLink, body: {'url': url.toString()});
 
-    print(utf8.decode(res.bodyBytes));
+    return SearchResult.fromHtml(utf8.decode(res.bodyBytes));
   }
 }

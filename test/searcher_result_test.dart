@@ -1,7 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter_saucenao_img_search/flutter_saucenao_img_search.dart';
+import 'package:html/dom.dart';
+import 'package:html/parser.dart';
 
 void main() {
   group('SourcePlatform class:', () {
@@ -91,7 +94,8 @@ void main() {
     TwitterSearchResultItem result =
         TwitterSearchResultItem.fromMap(twitterInfoMap);
     test('title', () {
-      expect(result.title, null);
+      expect(result.title,
+          '2015-04-20T06:10:02Z / 590034672601567232 / 188947814 / hue_nanairo');
     });
     test('twitterID', () {
       expect(result.tweetId, 590034672601567232);
@@ -106,6 +110,25 @@ void main() {
     test('sourceLink', () {
       expect(result.sourceLinksList,
           ["https:\/\/twitter.com\/i\/web\/status\/590034672601567232"]);
+    });
+  });
+
+  // Html Search Result Item
+  group('HtmlSearchResultItem:', () {
+    test('fromHtml method', () {
+      File htmlFile = File('test/test_src/nokey_pixiv_result.html');
+      Document htmlDoc = parse(htmlFile.readAsStringSync());
+      HtmlSearchResultItem result = HtmlSearchResultItem.fromElement(
+          htmlDoc.getElementsByClassName('resulttable')[0]);
+
+      expect(result.similarity, 94.92);
+      expect(result.title, '垃姬桶');
+      expect(
+          result.thumbnailLink,
+          'https://img1.saucenao.com/res/pixiv/9817/98175956_p0_master1200.jpg?'
+          'auth=1WNAkIoqI9ijfQhua4i8lg&exp=1675195200');
+      expect(result.sourceLinksList![0],
+          'https://www.pixiv.net/member_illust.php?mode=medium&illust_id=98175956');
     });
   });
 }

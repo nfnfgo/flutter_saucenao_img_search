@@ -102,9 +102,13 @@ genApiErrorFromInfoMap(Map infoMap) {
 /// This excption may be threw when you call `ImageSearcher` noKey method, since the
 /// noKey method need to parse data from the return HTML data.
 class HtmlContentException implements Exception {
+  /// The error message of the exception
   String? errMsg;
 
-  HtmlContentException(this.errMsg);
+  /// The raw HTML String that caused the parse error
+  String? htmlStr;
+
+  HtmlContentException(this.errMsg, {this.htmlStr});
 
   @override
   String toString() {

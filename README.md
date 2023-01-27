@@ -105,3 +105,7 @@ https://pub.dev/documentation/flutter_saucenao_img_search/latest/
 This package uses some custom Exception class to help you catch and handle Exception more acurately.
 
 You can check Api Reference Document for more info about each custom Exception class.
+
+## For More
+
+[Search Image Without using SauceNAO API Key](docs/no_key_search.md)

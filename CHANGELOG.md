@@ -1,5 +1,6 @@
-## 0.3.0
-- Try: Add search method that works without API Key
+## 1.0.0
+- Update: Add search method that works without API Key
+- Update: Update documents structure
 - Update: Add new Exception class: `HtmlContentException`
 - Update: Add class comment to some Exception class
 
