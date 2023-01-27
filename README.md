@@ -108,4 +108,4 @@ You can check Api Reference Document for more info about each custom Exception c
 
 ## For More
 
-[Search Image Without using SauceNAO API Key](docs/no_key_search.md)
+[Search Image Without using SauceNAO API Key](doc/no_key_search.md)
